@@ -379,11 +379,14 @@ uint32_t DHT::expectPulse(bool level) {
 // Otherwise fall back to using digitalRead (this seems to be necessary on
 // ESP8266 right now, perhaps bugs in direct port access functions?).
 #else
+  unsigned long start = micros();
+  unsigned long end = start;
   while (digitalRead(_pin) == level) {
-    if (count++ >= _maxcycles) {
+    if (end - start >= _maxcycles || start > end) {
       return TIMEOUT; // Exceeded timeout, fail.
     }
   }
+  return end - start;
 #endif
 
   return count;
