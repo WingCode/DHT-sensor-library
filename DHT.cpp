@@ -376,6 +376,7 @@ uint32_t DHT::expectPulse(bool level) {
       return TIMEOUT; // Exceeded timeout, fail.
     }
   }
+  return count;
 // Otherwise fall back to using digitalRead (this seems to be necessary on
 // ESP8266 right now, perhaps bugs in direct port access functions?).
 #else
