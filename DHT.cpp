@@ -383,6 +383,7 @@ uint32_t DHT::expectPulse(bool level) {
   unsigned long start = micros();
   unsigned long end = start;
   while (digitalRead(_pin) == level) {
+    end = micros();
     if (end - start >= _maxcycles || start > end) {
       return TIMEOUT; // Exceeded timeout, fail.
     }
